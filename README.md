@@ -8,9 +8,13 @@ This repository is Ken's public collection of agent skills chosen for public rel
 
 技能目录为 `skills/<skill-id>/`。
 
-目前第一个技能是 **podcast-transcribe 3.1**：把播客链接、RSS、播客名称或本地音频整理成结构化精华版、原文润色版和原文无润色版。
+**podcast-transcribe 3.1**：把播客链接、RSS、播客名称或本地音频整理成结构化精华版、原文润色版和原文无润色版。
 
 - 技能路径：[skills/podcast-transcribe](https://github.com/Kaiqiang-Chen/ken-public-skills/tree/main/skills/podcast-transcribe)
+
+**ai-interview-prep**：AI 面试陪练：结合岗位 JD 与简历，60 分钟内挖经历、模拟追问、产出一页面试提纲。
+
+- 技能路径：[skills/ai-interview-prep](https://github.com/Kaiqiang-Chen/ken-public-skills/tree/main/skills/ai-interview-prep)
 
 ## 使用
 
