@@ -1,0 +1,4 @@
+interface:
+  display_name: "播客转录与三版本文档"
+  short_description: "输入一个播客链接，输出全量结构总结与两版完整文字稿文档"
+  default_prompt: "使用 $podcast-transcribe 把这个播客链接转成结构化精华版、原文润色版和原文无润色版文档。"
