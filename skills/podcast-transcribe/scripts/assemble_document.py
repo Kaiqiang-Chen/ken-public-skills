@@ -21,6 +21,8 @@ def main():
     parser.add_argument('--polished', required=True)
     parser.add_argument('--raw', required=True)
     parser.add_argument('--output', required=True)
+    parser.add_argument('--meta-file', help='Markdown body for the trailing「## 元信息」section; '
+                        'replaces the default metadata bullets (e.g. omni-scraper adds shownotes and comments)')
     args = parser.parse_args()
 
     structured = read(args.structured)
@@ -29,21 +31,20 @@ def main():
     if not structured or not polished or not raw:
         raise SystemExit('structured, polished and raw inputs must all be non-empty')
 
-    doc = f'''---
-播客: {args.podcast}
-单集: {args.title}
-时长: {args.duration}
-转写日期: {date.today().isoformat()}
-来源: {args.source}
-转写引擎: {args.engine}
-工具: podcast-transcribe skill
----
+    default_meta = f'''- 播客: {args.podcast}
+- 单集: {args.title}
+- 时长: {args.duration}
+- 来源: [{args.source}]({args.source})
+- 转写引擎: {args.engine}
+- 转写日期: {date.today().isoformat()}
+- 工具: podcast-transcribe skill 3.2'''
+    meta = read(args.meta_file) if args.meta_file else default_meta
 
-# {args.title}
+    # 3.2: no metadata at the top. Title + 阅读说明 stay visible; all source metadata lives in the
+    # last H2「元信息」, which the Feishu step folds (heading2.style.folded = true).
+    doc = f'''# {args.title}
 
-> 阅读说明：本文包含结构化精华版、原文润色版和原文无润色版。
-
-原始节目：[节目链接]({args.source})
+> 阅读说明：本文包含结构化精华版、原文润色版和原文无润色版；节目信息、Shownotes 与评论见文末「元信息」（默认折叠）。
 
 ## 结构化精华版
 
@@ -60,6 +61,10 @@ def main():
 > 存档说明：以下为转写引擎初始输出。
 
 {raw}
+
+## 元信息
+
+{meta}
 '''
     Path(args.output).write_text(doc, encoding='utf-8')
     print(f'written={args.output} chars={len(doc)}')
